@@ -1,9 +1,17 @@
+//import 'package:bson/src/classes/object_id.dart';
+import 'dart:developer';
+
 import 'package:ecurie_app/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecurie_app/db/db.dart';
+import 'package:ecurie_app/db/class/Users.dart';
+import 'package:mongo_dart/mongo_dart.dart';
 
 void main() {
   MongoDatabase.connect();
+  var u = Users("username", "email", "password", "image", DateTime.now());
+  
+  MongoDatabase.insert(u);
   runApp(const MyApp());
 }
 
