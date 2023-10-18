@@ -128,17 +128,24 @@ class _RegisterState extends State<RegisterPage> {
     );
   }
 
-  void _register() {
+  void _register() async {
     final username = _usernameController.text;
     final email = _emailController.text;
     final password = _passwordController.text;
 
-    final register = /*register */ (
-      username: username,
-      email: email,
-      password: password,
-    );
+    var db = await Db.create(
+        'mongodb+srv://Samba:test@cluster0.hs007au.mongodb.net/test?retryWrites=true&w=majority');
+    await db.open();
 
-    print(register);
+    final collection = db.collection('users');
+    await collection.insertOne({
+      'username': username,
+      'email': email,
+      'password': password,
+    });
+
+    print('user inscrit: $username, $email, $password');
+
+    await db.close();
   }
 }
