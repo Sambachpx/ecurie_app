@@ -89,6 +89,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             IconButton(
               icon: const Icon(Icons.home),
               onPressed: () {
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -100,6 +101,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             IconButton(
               icon: const Icon(Icons.login),
               onPressed: () {
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -109,6 +111,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             IconButton(
               icon: const Icon(Icons.app_registration),
               onPressed: () {
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => RegisterPage()),
@@ -118,6 +121,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             IconButton(
               icon: const Icon(Icons.account_circle),
               onPressed: () {
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfilePage()),

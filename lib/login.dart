@@ -77,6 +77,7 @@ class LoginScreen extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: ElevatedButton(
                 onPressed: () {
+                  Navigator.pop(context);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -112,6 +113,7 @@ class LoginScreen extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: GestureDetector(
                 onTap: () => {
+                  Navigator.pop(context),
                   Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()))
                 },
                 child: Text(
@@ -134,6 +136,7 @@ class LoginScreen extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.home),
               onPressed: () {
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -145,6 +148,7 @@ class LoginScreen extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.login),
               onPressed: () {
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -154,6 +158,7 @@ class LoginScreen extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.app_registration),
               onPressed: () {
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => RegisterPage()),
@@ -163,6 +168,7 @@ class LoginScreen extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.account_circle),
               onPressed: () {
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfilePage()),

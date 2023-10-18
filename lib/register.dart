@@ -122,6 +122,7 @@ class _RegisterPageState extends State<RegisterPage> {
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: GestureDetector(
                 onTap: () => {
+                  Navigator.pop(context),
                   Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()))
                 },
                 child: Text(
@@ -144,6 +145,7 @@ class _RegisterPageState extends State<RegisterPage> {
             IconButton(
               icon: const Icon(Icons.home),
               onPressed: () {
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -155,6 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
             IconButton(
               icon: const Icon(Icons.login),
               onPressed: () {
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -164,6 +167,7 @@ class _RegisterPageState extends State<RegisterPage> {
             IconButton(
               icon: const Icon(Icons.app_registration),
               onPressed: () {
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => RegisterPage()),
@@ -173,6 +177,7 @@ class _RegisterPageState extends State<RegisterPage> {
             IconButton(
               icon: const Icon(Icons.account_circle),
               onPressed: () {
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfilePage()),
