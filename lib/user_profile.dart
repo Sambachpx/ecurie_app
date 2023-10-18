@@ -22,7 +22,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       body: SizedBox(
         width: double.infinity,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             const Text(
               'User Profile',
@@ -35,6 +35,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Ink.image(
                       image: const AssetImage('assets/images/user.png'),
@@ -61,6 +62,21 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Roboto',
                       )),
+                  const Text(
+                    'Age: ',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Roboto',
+                    ),
+                  ),
+                  const Text(
+                    'FFE link: ',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Roboto',
+                    ),),
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: ElevatedButton(
@@ -73,7 +89,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         );
                       },
                       child: const Text('Edit Profile',
-                          style: TextStyle(fontSize: 15)),
+                          style: TextStyle(fontSize: 20)),
                     ),
                   ),
                 ],
@@ -94,7 +110,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                      const MyHomePage(title: 'Equitator')),
+                          const MyHomePage(title: 'Equitator')),
                 );
               },
             ),
