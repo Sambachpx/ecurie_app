@@ -1,3 +1,4 @@
+import 'package:ecurie_app/forgotmdp.dart';
 import 'package:flutter/material.dart';
 import 'register.dart';
 import 'background.dart';
@@ -59,12 +60,17 @@ class LoginScreen extends StatelessWidget {
             Container(
               alignment: Alignment.centerRight,
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              child: GestureDetector(
+                onTap: () => {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPage()))
+                },
               child: Text(
                 "Forgot your password?",
                 style: TextStyle(
                     fontSize: 12,
                     color: Color(0XFF2661FA)
                 ),
+              ),
               ),
             ),
 
