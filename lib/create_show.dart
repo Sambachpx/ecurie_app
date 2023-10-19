@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:ecurie_app/user_profile.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ecurie_app/db/db.dart';
+import 'package:ecurie_app/db/class/events.dart';
 
 class CreateShowPage extends StatefulWidget {
   const CreateShowPage({Key? key}) : super(key: key);
