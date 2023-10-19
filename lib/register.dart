@@ -32,6 +32,45 @@ class _RegisterState extends State<RegisterPage> {
     }
   }
 
+  void _register() async {
+    final username = _usernameController.text;
+    final email = _emailController.text;
+    final password = _passwordController.text;
+    final cryptPassword = base64.encode(utf8.encode(password));
+
+    var db = await mongo.Db.create(MONGO_URL);
+    await db.open();
+
+    final collection = db.collection('test');
+
+    final existUser = await collection.findOne({'username': username});
+    if (existUser != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Nom d'utilisateur déjà pris"),
+          ),
+      );
+    }
+
+    if (!emailRegex.hasMatch(email)) {
+      print("adresse e-mail invalide");
+    } else {
+      await collection.insertOne({
+        'username': username,
+        'email': email,
+        'password': cryptPassword,
+      });
+
+      print("user inscrit: $username, $email, $cryptPassword");
+
+      _usernameController.clear();
+      _emailController.clear();
+      _passwordController.clear();
+
+      await db.close();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -154,41 +193,5 @@ class _RegisterState extends State<RegisterPage> {
         ),
       ),
     );
-  }
-
-  void _register() async {
-    final username = _usernameController.text;
-    final email = _emailController.text;
-    final password = _passwordController.text;
-    final cryptPassword = base64.encode(utf8.encode(password));
-
-    var db = await mongo.Db.create(MONGO_URL);
-    await db.open();
-
-    final collection = db.collection('test');
-
-    final existUser = await collection.findOne({'username': username});
-    if (existUser != null) {
-      print('cet utilisateur existe déjà');
-      return;
-    }
-
-    if (!emailRegex.hasMatch(email)) {
-      print("adresse e-mail invalide");
-    } else {
-      await collection.insertOne({
-        'username': username,
-        'email': email,
-        'password': cryptPassword,
-      });
-
-      print("user inscrit: $username, $email, $cryptPassword");
-
-      _usernameController.clear();
-      _emailController.clear();
-      _passwordController.clear();
-
-      await db.close();
-    }
   }
 }
