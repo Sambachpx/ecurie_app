@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
 
   Future<void> _login(MongoDatabase mongoDatabase) async {
-    mongoDatabase.connect();
+    await mongoDatabase.connect();
     String enteredUsername = usernameController.text;
     String enteredPassword = encodePassword(passwordController.text);
 
@@ -150,10 +150,8 @@ class _LoginScreenState extends State<LoginScreen> {
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: GestureDetector(
                 onTap: () => {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RegisterPage()))
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RegisterPage()))
                 },
                 child: const Text(
                   "Don't Have an Account? Sign up",
