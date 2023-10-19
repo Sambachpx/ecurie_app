@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ecurie_app/home_page.dart';
 import 'package:ecurie_app/login.dart';
 import 'package:ecurie_app/register.dart';
+import 'package:ecurie_app/create_lesson.dart';
+import 'package:ecurie_app/create_show.dart';
 import 'package:ecurie_app/db/db.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -76,22 +78,64 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Roboto',
-                    ),),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const UserProfilePage()),
-                        );
-                      },
-                      child: const Text('Edit Profile',
-                          style: TextStyle(fontSize: 20)),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
+                          width: 100,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const UserProfilePage()),
+                                // à changer pour la page d'édition de profil
+                              );
+                            },
+                            child: const Text(
+                              'Edit Profile',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 100,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const CreateLessonPage()),
+                              );
+                            },
+                            child: const Text('Create Lesson',
+                                textAlign: TextAlign.center),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 100,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const CreateShowPage()),
+                              );
+                            },
+                            child: const Text('Create Show',
+                                textAlign: TextAlign.center),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
@@ -110,7 +154,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                      const MyHomePage(title: 'Equitator')),
+                          const MyHomePage(title: 'Equitator')),
                 );
               },
             ),

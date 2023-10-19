@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'login.dart';
 import 'background.dart';
 import 'dart:convert';
+import 'user_profile.dart';
+import 'home_page.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 

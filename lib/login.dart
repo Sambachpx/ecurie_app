@@ -150,10 +150,8 @@ class _LoginScreenState extends State<LoginScreen> {
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: GestureDetector(
                 onTap: () => {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RegisterPage()))
+                  Navigator.pop(context),
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()))
                 },
                 child: const Text(
                   "Don't Have an Account? Sign up",
@@ -163,6 +161,55 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: Color(0xFF2661FA)),
                 ),
               ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                      const MyHomePage(title: 'Equitator')),
+                );
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.login),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.app_registration),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterPage()),
+                );
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.account_circle),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UserProfilePage()),
+                );
+              },
             ),
           ],
         ),
