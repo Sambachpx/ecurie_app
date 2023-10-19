@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
 
   Future<void> _login(MongoDatabase mongoDatabase) async {
-    mongoDatabase.connect();
+    await mongoDatabase.connect();
     String enteredUsername = usernameController.text;
     String enteredPassword = encodePassword(passwordController.text);
 
