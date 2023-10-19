@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ecurie_app/home_page.dart';
 import 'package:ecurie_app/login.dart';
 import 'package:ecurie_app/register.dart';
+import 'package:ecurie_app/create_lesson.dart';
 import 'package:ecurie_app/db/db.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -76,21 +77,36 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Roboto',
-                    ),),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(10),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const UserProfilePage()),
-                        );
-                      },
-                      child: const Text('Edit Profile',
-                          style: TextStyle(fontSize: 20)),
-                    ),
+                    child: Row(children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const UserProfilePage()),
+                          );
+                        },
+                        child: const Text('Edit Profile',
+                            style: TextStyle(fontSize: 20)),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const CreateLessonPage()),
+                          );
+                        },
+                        child: const Text('Create Lesson',
+                            style: TextStyle(fontSize: 20)),
+                      ),
+                    ]),
                   ),
                 ],
               ),
