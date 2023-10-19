@@ -39,6 +39,7 @@ class _RegisterState extends State<RegisterPage> {
 
     return Scaffold(
       body: Background(
+        child: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Column(children: [
@@ -148,6 +149,7 @@ class _RegisterState extends State<RegisterPage> {
             )
           ],),
         ),
+      ),
       ),
     );
   }
