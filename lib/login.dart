@@ -33,9 +33,6 @@ class _LoginScreenState extends State<LoginScreen> {
     final collection = await mongoDatabase.getCollection(USER_COLLECTION);
     final user = await collection.findOne({'username': enteredUsername});
 
-    print(collection);
-    print("hazoiudhjkezabhiezbdf");
-
     if (user != null && user['password'] == enteredPassword) {
       Navigator.pushReplacement(
         context,

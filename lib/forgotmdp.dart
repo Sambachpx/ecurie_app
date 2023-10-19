@@ -1,9 +1,12 @@
+import 'dart:convert';
+import 'package:ecurie_app/db/db.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ecurie_app/Notifier/DbManagement.dart';
+import 'package:mongo_dart/mongo_dart.dart' as mongo;
 import 'background.dart';
 import 'db/constants.dart';
 import 'register.dart';
-import 'dart:convert';
-import 'package:mongo_dart/mongo_dart.dart' as mongo;
 
 class ForgotPage extends StatefulWidget {
   @override
@@ -15,14 +18,17 @@ class _ForgotPageState extends State<ForgotPage> {
   final TextEditingController _emailController = TextEditingController();
   String? _password;
 
-  Future<void> _checkUserInformation(String username, String email) async {
-    var db = await mongo.Db.create(MONGO_URL);
-    await db.open();
-    var collection = db.collection('test');
-    var user = await collection.findOne(mongo.where.eq('username', username).eq('email', email));
+  Future<void> _checkUserInformation(MongoDatabase mongoDatabase) async {
+    await mongoDatabase.connect();
 
-    await db.close();
+    String enteredUsername = _usernameController.text;
+    String enteredEmail = _emailController.text;
 
+
+    final collection = await mongoDatabase.getCollection(USER_COLLECTION);
+    print('User: $enteredUsername, Email: $enteredEmail');
+    final user = await collection.findOne(mongo.where.eq('username', enteredUsername).eq('email', enteredEmail));
+    print('User found: $user');
     if (user != null) {
       String decodedPassword = utf8.decode(base64.decode(user['password']));
       setState(() {
@@ -36,8 +42,16 @@ class _ForgotPageState extends State<ForgotPage> {
   }
 
   @override
+  void dispose() {
+    _usernameController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final appState = Provider.of<AppState>(context);
 
     return Scaffold(
       body: Background(
@@ -96,7 +110,7 @@ class _ForgotPageState extends State<ForgotPage> {
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: ElevatedButton(
                 onPressed: () {
-                  _checkUserInformation(_usernameController.text, _emailController.text);
+                  _checkUserInformation(appState.mongoDatabase);
                 },
                 child: Container(
                   alignment: Alignment.center,
