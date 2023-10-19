@@ -129,6 +129,7 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      //Insert the datas in the database here
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           backgroundColor: Colors.green,
