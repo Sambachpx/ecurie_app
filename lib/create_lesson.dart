@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ecurie_app/user_profile.dart';
 
-
 class CreateLessonPage extends StatefulWidget {
   const CreateLessonPage({Key? key}) : super(key: key);
 
@@ -106,7 +105,8 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
               DropdownButtonFormField<String>(
                 value: _discipline,
                 decoration: InputDecoration(labelText: 'Discipline'),
-                items: ['Dressage', 'Saut d\'obstacle', 'Endurance'].map((discipline) {
+                items: ['Dressage', 'Saut d\'obstacle', 'Endurance']
+                    .map((discipline) {
                   return DropdownMenuItem(
                     value: discipline,
                     child: Text(discipline),
@@ -131,18 +131,23 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
                     if (_formKey.currentState!.validate()) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('Lesson created'),
+                          backgroundColor: Colors.green,
+                          content: Text('Lesson created',
+                              style: TextStyle(fontSize: 20)),
                         ),
                       );
                       Navigator.pop(context);
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const UserProfilePage()),
+                        MaterialPageRoute(
+                            builder: (context) => const UserProfilePage()),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('Please fill in all fields'),
+                          backgroundColor: Colors.red,
+                          content: Text('Please fill in all fields',
+                              style: TextStyle(fontSize: 20)),
                         ),
                       );
                     }
@@ -166,7 +171,8 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
     );
     if (picked != null) {
       setState(() {
-        _dateAndTime = DateTime(picked.year, picked.month, picked.day, _dateAndTime?.hour ?? 0, _dateAndTime?.minute ?? 0);
+        _dateAndTime = DateTime(picked.year, picked.month, picked.day,
+            _dateAndTime?.hour ?? 0, _dateAndTime?.minute ?? 0);
         _dateController.text = _dateAndTime!.toLocal().toString().split(' ')[0];
       });
     }
@@ -193,9 +199,10 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
           picked.hour,
           picked.minute,
         );
-        final formattedTime = '${_dateAndTime!.hour.toString().padLeft(2, '0')}:${_dateAndTime!.minute.toString().padLeft(2, '0')}';
-        _timeController.text = formattedTime;      });
+        final formattedTime =
+            '${_dateAndTime!.hour.toString().padLeft(2, '0')}:${_dateAndTime!.minute.toString().padLeft(2, '0')}';
+        _timeController.text = formattedTime;
+      });
     }
   }
-
 }
