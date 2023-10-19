@@ -1,10 +1,11 @@
 import 'dart:io';
-
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:ecurie_app/user_profile.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ecurie_app/db/db.dart';
 import 'package:ecurie_app/db/class/events.dart';
+import 'package:ecurie_app/Notifier/DbManagement.dart';
 
 class CreateShowPage extends StatefulWidget {
   const CreateShowPage({Key? key}) : super(key: key);
@@ -14,24 +15,33 @@ class CreateShowPage extends StatefulWidget {
 }
 
 class _CreateShowPageState extends State<CreateShowPage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String? _name;
-  String? _address;
-  DateTime? _dateAndTime;
+  final _formKey = GlobalKey<FormState>();
   File? _image;
+  final _nameController = TextEditingController();
+  final _addressController = TextEditingController();
+  final _dateController = TextEditingController();
+  final _dateTimeController = TextEditingController();
 
-  final TextEditingController _dateController = TextEditingController();
-  final TextEditingController _timeController = TextEditingController();
+  Future _pickImageFromGallery() async {
+    final pickedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      setState(() {
+        _image = File(pickedImage.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    final appState = Provider.of<AppState>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Text('Create a Show'),
       ),
       body: SingleChildScrollView(
-        // Utilisation de SingleChildScrollView
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(
@@ -41,26 +51,22 @@ class _CreateShowPageState extends State<CreateShowPage> {
               children: <Widget>[
                 TextFormField(
                   decoration: const InputDecoration(labelText: 'Name'),
+                  controller: _nameController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the name of the show';
                     }
                     return null;
                   },
-                  onSaved: (value) {
-                    _name = value;
-                  },
                 ),
                 TextFormField(
                   decoration: const InputDecoration(labelText: 'Address'),
+                  controller: _addressController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the address of the show';
                     }
                     return null;
-                  },
-                  onSaved: (value) {
-                    _address = value;
                   },
                 ),
                 TextFormField(
@@ -107,7 +113,6 @@ class _CreateShowPageState extends State<CreateShowPage> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        // Insert the data in the database here
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             backgroundColor: Colors.green,
@@ -142,57 +147,11 @@ class _CreateShowPageState extends State<CreateShowPage> {
     );
   }
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _dateAndTime ?? DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null) {
-      setState(() {
-        _dateAndTime = DateTime(picked.year, picked.month, picked.day,
-            _dateAndTime?.hour ?? 0, _dateAndTime?.minute ?? 0);
-        _dateController.text = _dateAndTime!.toLocal().toString().split(' ')[0];
-      });
-    }
-  }
-
-  Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.fromDateTime(_dateAndTime ?? DateTime.now()),
-      builder: (BuildContext context, Widget? child) {
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-          child: child!,
-        );
-      },
-    );
-
-    if (picked != null) {
-      setState(() {
-        _dateAndTime = DateTime(
-          _dateAndTime?.year ?? DateTime.now().year,
-          _dateAndTime?.month ?? DateTime.now().month,
-          _dateAndTime?.day ?? DateTime.now().day,
-          picked.hour,
-          picked.minute,
-        );
-        final formattedTime =
-            '${_dateAndTime!.hour.toString().padLeft(2, '0')}:${_dateAndTime!.minute.toString().padLeft(2, '0')}';
-        _timeController.text = formattedTime;
-      });
-    }
-  }
-
-  Future _pickImageFromGallery() async {
-    final pickedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedImage != null) {
-      setState(() {
-        _image = File(pickedImage.path);
-      });
-    }
+  Future<void>_register(MongoDatabase database) async {
+        final name: _nameController.text;
+        address: _addressController.text;
+        date: _dateAndTime;
+        image: _image);
+    await database.insertEvent(event);
   }
 }
