@@ -15,15 +15,15 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
   String? _duration;
   String? _discipline;
 
-  TextEditingController _dateController = TextEditingController();
-  TextEditingController _timeController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _timeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title: const Text('Create Lesson'),
+        title: const Text('Create a Lesson'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -34,7 +34,7 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
             children: <Widget>[
               DropdownButtonFormField<String>(
                 value: _location,
-                decoration: InputDecoration(labelText: 'Location'),
+                decoration: const InputDecoration(labelText: 'Location'),
                 items: ['Carrière', 'Manège'].map((location) {
                   return DropdownMenuItem(
                     value: location,
@@ -54,7 +54,7 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
                 },
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Date'),
+                decoration: const InputDecoration(labelText: 'Date'),
                 readOnly: true,
                 controller: _dateController,
                 onTap: () {
@@ -68,7 +68,7 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
                 },
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Time'),
+                decoration: const InputDecoration(labelText: 'Time'),
                 readOnly: true,
                 controller: _timeController,
                 onTap: () {
@@ -83,7 +83,7 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
               ),
               DropdownButtonFormField<String>(
                 value: _duration,
-                decoration: InputDecoration(labelText: 'Duration'),
+                decoration: const InputDecoration(labelText: 'Duration'),
                 items: ['30min', '1h'].map((duration) {
                   return DropdownMenuItem(
                     value: duration,
@@ -104,7 +104,7 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
               ),
               DropdownButtonFormField<String>(
                 value: _discipline,
-                decoration: InputDecoration(labelText: 'Discipline'),
+                decoration: const InputDecoration(labelText: 'Discipline'),
                 items: ['Dressage', 'Saut d\'obstacle', 'Endurance']
                     .map((discipline) {
                   return DropdownMenuItem(
@@ -153,7 +153,7 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
                       );
                     }
                   },
-                  child: Text('Create Lesson'),
+                  child: const Text('Create Lesson'),
                 ),
               ),
             ],
