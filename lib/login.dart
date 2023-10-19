@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:ecurie_app/db/db.dart';
 import 'package:ecurie_app/db/class/Users.dart';
+import 'package:ecurie_app/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecurie_app/Notifier/DbManagement.dart';
 import 'db/constants.dart';
+import 'home_page.dart';
 import 'register.dart';
 import 'background.dart';
 import 'main_page.dart';
