@@ -1,3 +1,4 @@
+import 'package:ecurie_app/db/class/Users.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:ecurie_app/db/constants.dart';
 
