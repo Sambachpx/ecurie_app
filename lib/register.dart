@@ -6,8 +6,6 @@ import 'package:provider/provider.dart';
 import 'login.dart';
 import 'background.dart';
 import 'dart:convert';
-import 'user_profile.dart';
-import 'home_page.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
@@ -41,168 +39,125 @@ class _RegisterState extends State<RegisterPage> {
 
     return Scaffold(
       body: Background(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: const Text(
-                  "REGISTER",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF2661FA),
-                      fontSize: 36),
-                  textAlign: TextAlign.left,
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  child: const Text(
+                    "REGISTER",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF2661FA),
+                        fontSize: 36),
+                    textAlign: TextAlign.left,
+                  ),
                 ),
-              ),
-              SizedBox(height: size.height * 0.03),
-              Container(
-                alignment: Alignment.center,
-                margin: const EdgeInsets.symmetric(horizontal: 40),
-                child: TextFormField(
-                  decoration: const InputDecoration(labelText: "Username"),
-                  controller: _usernameController,
-                  validator: (value) => value!.isEmpty ? 'Champ requis' : null,
+                SizedBox(height: size.height * 0.03),
+                Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.symmetric(horizontal: 40),
+                  child: TextFormField(
+                    decoration: const InputDecoration(labelText: "Username"),
+                    controller: _usernameController,
+                    validator: (value) =>
+                        value!.isEmpty ? 'Champ requis' : null,
+                  ),
                 ),
-              ),
-              SizedBox(height: size.height * 0.03),
-              Container(
-                alignment: Alignment.center,
-                margin: const EdgeInsets.symmetric(horizontal: 40),
-                child: TextFormField(
-                  decoration: const InputDecoration(labelText: "Email"),
-                  controller: _emailController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Champ requis';
-                    } else if (!emailRegex.hasMatch(value)) {
-                      return 'Adresse email invalide';
-                    }
-                    return null;
-                  },
+                SizedBox(height: size.height * 0.03),
+                Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.symmetric(horizontal: 40),
+                  child: TextFormField(
+                    decoration: const InputDecoration(labelText: "Email"),
+                    controller: _emailController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Champ requis';
+                      } else if (!emailRegex.hasMatch(value)) {
+                        return 'Adresse email invalide';
+                      }
+                      return null;
+                    },
+                  ),
                 ),
-              ),
-              SizedBox(height: size.height * 0.03),
-              Container(
-                alignment: Alignment.center,
-                margin: const EdgeInsets.symmetric(horizontal: 40),
-                child: TextFormField(
-                  decoration: const InputDecoration(labelText: "Password"),
-                  controller: _passwordController,
-                  validator: (value) => value!.isEmpty ? 'Champ requis' : null,
-                  obscureText: true,
+                SizedBox(height: size.height * 0.03),
+                Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.symmetric(horizontal: 40),
+                  child: TextFormField(
+                    decoration: const InputDecoration(labelText: "Password"),
+                    controller: _passwordController,
+                    validator: (value) =>
+                        value!.isEmpty ? 'Champ requis' : null,
+                    obscureText: true,
+                  ),
                 ),
-              ),
-              SizedBox(height: size.height * 0.03),
-              TextButton(
-                child: Text('Select Image'),
-                onPressed: _pickImageFromGallery,
-              ),
-              _image == null
-                  ? const Text('No Image selected')
-                  : Image.file(_image!),
-              Container(
-                alignment: Alignment.centerRight,
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                child: ElevatedButton(
-                  onPressed: () {
-                    _register(appState.mongoDatabase);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
-                    );
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 50.0,
-                    width: size.width * 0.5,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(80.0),
-                        gradient: const LinearGradient(colors: [
-                          Color.fromARGB(255, 255, 136, 34),
-                          Color.fromARGB(255, 255, 177, 41)
-                        ])),
-                    padding: const EdgeInsets.all(0),
-                    child: const Text(
-                      "SIGN UP",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                SizedBox(height: size.height * 0.03),
+                TextButton(
+                  child: Text('Select Image'),
+                  onPressed: _pickImageFromGallery,
+                ),
+                _image == null
+                    ? const Text('No Image selected')
+                    : Image.file(_image!),
+                Container(
+                  alignment: Alignment.centerRight,
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      _register(appState.mongoDatabase);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 50.0,
+                      width: size.width * 0.5,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(80.0),
+                          gradient: const LinearGradient(colors: [
+                            Color.fromARGB(255, 255, 136, 34),
+                            Color.fromARGB(255, 255, 177, 41)
+                          ])),
+                      padding: const EdgeInsets.all(0),
+                      child: const Text(
+                        "SIGN UP",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                alignment: Alignment.centerRight,
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                child: GestureDetector(
-                  onTap: () => {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()))
-                  },
-                  child: const Text(
-                    "Already Have an Account? Sign in",
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF2661FA)),
+                Container(
+                  alignment: Alignment.centerRight,
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                  child: GestureDetector(
+                    onTap: () => {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()))
+                    },
+                    child: const Text(
+                      "Already Have an Account? Sign in",
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF2661FA)),
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.home),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const MyHomePage(title: 'Equitator')),
-                );
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.login),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.app_registration),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RegisterPage()),
-                );
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.account_circle),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => UserProfilePage()),
-                );
-              },
-            ),
-          ],
         ),
       ),
     );
