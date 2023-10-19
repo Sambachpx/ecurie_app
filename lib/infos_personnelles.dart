@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+void main(){
+  runApp(MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(
+        title: Myform(),
+      ),
+    ),
+  ));
+}
 
 class Myform extends StatelessWidget {
   //get value => null;
@@ -13,7 +22,7 @@ class Myform extends StatelessWidget {
           width: 500,
       child: TextFormField(
         maxLength: 12,
-        maxLines: 1,
+       // maxLines: 1,
         initialValue: "+33",
         decoration: const InputDecoration(
           labelText: "Enter number phone",
@@ -23,7 +32,7 @@ class Myform extends StatelessWidget {
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         validator: (value){
           if (value!.isEmpty){
-            return "please enter a text";
+            return "Invalid phone number";
           }
           if (!isValidText(value)){
             return "invalid charaters entered";
@@ -60,7 +69,7 @@ class MyFormtwo extends StatelessWidget{
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         validator: (value){
           if (value!.isEmpty){
-            return "please enter a text";
+            return "Invalid phone number";
           }
           return null;
         }
@@ -71,13 +80,32 @@ class MyFormtwo extends StatelessWidget{
   }
 }
 
-void main(){
-  runApp(MaterialApp(
-    home: Scaffold(
-      appBar: AppBar(
-        title: Myform(),
+class lien_Ffe extends StatelessWidget{
+  get value => null;
+
+  Widget build(BuildContext context){
+    return Form(
+      child: Center(
+        child: Container(
+            width: 500,
+            child: TextFormField(
+              initialValue:"Https://",
+                decoration: const InputDecoration(
+                    labelText: "Enter your FFE",
+                    hintText: "Enter lien",
+                    border: OutlineInputBorder()
+                ),
+                validator: (value){
+                  if (value!.isEmpty){
+                    return "Invalid phone number";
+                  }
+                  return null;
+                }
+            )
+        ),
       ),
-    ),
-  ));
+    );
+  }
 }
+
 

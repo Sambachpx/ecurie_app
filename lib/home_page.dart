@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:ecurie_app/edit_infos.dart';
 import 'infos_personnelles.dart';
+import 'package:flutter/material.dart';
+import 'edit_infos.dart';
+
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -19,10 +21,16 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
+
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Myform(),
             MyFormtwo(),
+            lien_Ffe(),
+            //EditProfile(title: "Edit Profile cheval"),
+
+
           ],
         ),
       ),
