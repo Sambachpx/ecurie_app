@@ -1,3 +1,6 @@
+#Lib Constants IGNORE
+lib/db/constants.dart
+
 # Miscellaneous
 *.class
 *.log

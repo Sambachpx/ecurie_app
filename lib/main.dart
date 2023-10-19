@@ -1,15 +1,20 @@
+import 'package:ecurie_app/Notifier/DbManagement.dart';
+import 'package:ecurie_app/db/db.dart';
 import 'package:ecurie_app/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:ecurie_app/db/db.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  MongoDatabase.connect();
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => AppState(),
+    child: MyApp(),
+  ),);
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,7 +24,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner : false,
     );
   }
 }
