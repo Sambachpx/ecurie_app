@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:ecurie_app/db/db.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
@@ -9,7 +11,7 @@ class Horses {
   late String _race;
   late String _sexe;
   late String _specialite;
-  late int _idhorseman;
+  late Array _idhorseman;
   late DateTime _created_at;
 
   Horses(this._idowner, this._name, this._age, this._role, this._race,
@@ -21,7 +23,7 @@ class Horses {
   String get race => _race;
   String get sexe => _sexe;
   String get specialite => _specialite;
-  int get idhorseman => _idhorseman;
+  Array get idhorseman => _idhorseman;
   DateTime get getHorseCreatedAt => _created_at;
 
   set setHorseName(String name) => {_name = name};
