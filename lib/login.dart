@@ -20,6 +20,9 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -31,14 +34,14 @@ class _LoginScreenState extends State<LoginScreen> {
           children: <Widget>[
             Container(
               alignment: Alignment.centerLeft,
-              padding: EdgeInsets.symmetric(horizontal: 40),
+              padding: const EdgeInsets.symmetric(horizontal: 40),
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/images/cheval.jpeg"),
                   fit: BoxFit.cover,
                 ),
               ),
-              child: Text(
+              child: const Text(
                 "LOGIN",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -51,9 +54,8 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(height: size.height * 0.03),
             Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(horizontal: 40),
-              child: TextField(
-                controller: usernameController,
+              margin: const EdgeInsets.symmetric(horizontal: 40),
+              child: const TextField(
                 decoration: InputDecoration(
                   labelText: "Username",
                 ),
@@ -88,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(height: size.height * 0.05),
             Container(
               alignment: Alignment.centerRight,
-              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: ElevatedButton(
                 onPressed: () {
                   String enteredUsername = usernameController.text;
@@ -133,13 +135,12 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Container(
               alignment: Alignment.centerRight,
-              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => RegisterPage()));
+                onTap: () => {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()))
                 },
-                child: Text(
+                child: const Text(
                   "Don't Have an Account? Sign up",
                   style: TextStyle(
                       fontSize: 12,

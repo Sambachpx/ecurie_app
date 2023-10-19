@@ -1,2 +1,3 @@
-const MONGO_URL = "mongodb+srv://root:root@cluster0.nmfgz0o.mongodb.net/dbtest?retryWrites=true&w=majority";
-const COLLECTION_NAME = "users";
+const MONGO_URL =
+    "mongodb+srv://Samba:test@cluster0.hs007au.mongodb.net/test?retryWrites=true&w=majority";
+const COLLECTION_NAME = "test";

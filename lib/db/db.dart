@@ -11,6 +11,6 @@ class MongoDatabase {
       print('Connected !');
     } catch (e) {
         print(e);
-    };
+    }
   }
 }
