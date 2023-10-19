@@ -160,8 +160,7 @@ class _RegisterState extends State<RegisterPage> {
           ),
         ),
       ),
-      ),
-    );
+      );
   }
 
   Future<void> _register(MongoDatabase mongoDatabase) async {
