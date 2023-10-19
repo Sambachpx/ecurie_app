@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'login.dart';
 import 'background.dart';
+import 'dart:convert';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
@@ -155,6 +156,7 @@ class _RegisterState extends State<RegisterPage> {
     final username = _usernameController.text;
     final email = _emailController.text;
     final password = _passwordController.text;
+    final cryptPassword = base64.encode(utf8.encode(password));
     String image = "/";
     String number = "";
     int age = 0;
@@ -169,7 +171,7 @@ class _RegisterState extends State<RegisterPage> {
       // }
       //await collection.updateOne({"username" : "jeff"},{"age" : 5});
       try {
-        await collection.insert(user.insertUser(mongoDatabase,collection,user.getUserName, user.getUserEmail, user.getUserPassword, user.getUserImage, user.getUserNumber,user.getUserAge,user.getUserLink,user.getUserRole ) as Map<String, dynamic>);
+        await collection.insert(user.insertUser(mongoDatabase,collection,user.getUserName, user.getUserEmail, cryptPassword, user.getUserImage, user.getUserNumber,user.getUserAge,user.getUserLink,user.getUserRole ) as Map<String, dynamic>);
       } catch (e) {
         print(e);
       }

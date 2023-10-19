@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'package:ecurie_app/db/db.dart';
+import 'package:ecurie_app/db/class/Users.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ecurie_app/Notifier/DbManagement.dart';
 import 'db/constants.dart';
 import 'register.dart';
 import 'background.dart';
 import 'main_page.dart';
 import 'forgotmdp.dart';
-import 'package:mongo_dart/mongo_dart.dart' as mongo;
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -20,15 +23,16 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  Future<void> _login() async {
+  Future<void> _login(MongoDatabase mongoDatabase) async {
+    mongoDatabase.connect();
     String enteredUsername = usernameController.text;
     String enteredPassword = encodePassword(passwordController.text);
 
-    var db = await mongo.Db.create(MONGO_URL);
-    await db.open();
-    final collection = db.collection('test');
+    final collection = await mongoDatabase.getCollection(USER_COLLECTION);
     final user = await collection.findOne({'username': enteredUsername});
-    await db.close();
+
+    print(collection);
+    print("hazoiudhjkezabhiezbdf");
 
     if (user != null && user['password'] == enteredPassword) {
       Navigator.pushReplacement(
@@ -54,6 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final appState = Provider.of<AppState>(context);
 
     return Scaffold(
       body: Background(
@@ -116,7 +121,9 @@ class _LoginScreenState extends State<LoginScreen> {
               alignment: Alignment.centerRight,
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: ElevatedButton(
-                onPressed: _login,
+                onPressed: () {
+                  _login(appState.mongoDatabase);
+                },
                 child: Container(
                   alignment: Alignment.center,
                   height: 50.0,
