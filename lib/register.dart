@@ -37,103 +37,120 @@ class _RegisterState extends State<RegisterPage> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: Background(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: const Text(
-                "REGISTER",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF2661FA),
-                    fontSize: 36),
-                textAlign: TextAlign.left,
+      body: SingleChildScrollView(
+        child: Background(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: const Text(
+                  "REGISTER",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF2661FA),
+                      fontSize: 36),
+                  textAlign: TextAlign.left,
+                ),
               ),
-            ),
-            SizedBox(height: size.height * 0.03),
-            Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(horizontal: 40),
-              child: TextField(
-                decoration: const InputDecoration(labelText: "Username"),
-                controller: _usernameController,
+              SizedBox(height: size.height * 0.03),
+              Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.symmetric(horizontal: 40),
+                child: TextField(
+                  decoration: const InputDecoration(labelText: "Username"),
+                  controller: _usernameController,
+                ),
               ),
-            ),
-            SizedBox(height: size.height * 0.03),
-            Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(horizontal: 40),
-              child: TextField(
-                decoration: const InputDecoration(labelText: "Email"),
-                controller: _emailController,
+              SizedBox(height: size.height * 0.03),
+              Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.symmetric(horizontal: 40),
+                child: TextField(
+                  decoration: const InputDecoration(labelText: "Email"),
+                  controller: _emailController,
+                ),
               ),
-            ),
-            SizedBox(height: size.height * 0.03),
-            Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(horizontal: 40),
-              child: TextField(
-                decoration: const InputDecoration(labelText: "Password"),
-                controller: _passwordController,
+              SizedBox(height: size.height * 0.03),
+              Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.symmetric(horizontal: 40),
+                child: TextField(
+                  decoration: const InputDecoration(labelText: "Password"),
+                  controller: _passwordController,
+                ),
               ),
-            ),
-            SizedBox(height: size.height * 0.03),
-            TextButton(
-              onPressed: _pickImageFromGallery,
-              child: const Text('Select Image'),
-            ),
-            _image == null
-                ? const Text('No Image selected')
-                : Image.file(_image!),
-            Container(
-              alignment: Alignment.centerRight,
-              margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-              child: ElevatedButton(
-                onPressed: () {
-                  _register();
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 50.0,
-                  width: size.width * 0.5,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(80.0),
-                      gradient: const LinearGradient(colors: [
-                        Color.fromARGB(255, 255, 136, 34),
-                        Color.fromARGB(255, 255, 177, 41)
-                      ])),
-                  padding: const EdgeInsets.all(0),
-                  child: const Text(
-                    "SIGN UP",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+              SizedBox(height: size.height * 0.03),
+              TextButton(
+                onPressed: _pickImageFromGallery,
+                child: const Text('Select Image'),
+              ),
+              Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.symmetric(horizontal: 40),
+                child: ClipOval(
+                  child: SizedBox(
+                    width: 150,
+                    height: 150,
+                    child: _image == null
+                        ? const Text('No Image')
+                        : Image.file(
+                      _image!,
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              alignment: Alignment.centerRight,
-              margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-              child: GestureDetector(
-                onTap: () => {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginScreen()))
-                },
-                child: const Text(
-                  "Already Have an Account? Sign in",
-                  style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF2661FA)),
+              Container(
+                alignment: Alignment.centerRight,
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                child: ElevatedButton(
+                  onPressed: () {
+                    _register();
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 50.0,
+                    width: size.width * 0.5,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(80.0),
+                        gradient: const LinearGradient(colors: [
+                          Color.fromARGB(255, 255, 136, 34),
+                          Color.fromARGB(255, 255, 177, 41)
+                        ])),
+                    padding: const EdgeInsets.all(0),
+                    child: const Text(
+                      "SIGN UP",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ),
               ),
-            )
-          ],
+              Container(
+                alignment: Alignment.centerRight,
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                child: GestureDetector(
+                  onTap: () => {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()))
+                  },
+                  child: const Text(
+                    "Already Have an Account? Sign in",
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF2661FA)),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
