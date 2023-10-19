@@ -3,6 +3,8 @@ import 'register.dart';
 import 'background.dart';
 
 class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -14,13 +16,13 @@ class LoginScreen extends StatelessWidget {
           children: <Widget>[
             Container(
               alignment: Alignment.centerLeft,
-              padding: EdgeInsets.symmetric(horizontal: 40),
+              padding: const EdgeInsets.symmetric(horizontal: 40),
               decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("/Users/coding/Desktop/ecurie_app/assets/images/cheval.jpeg"),
                     fit: BoxFit.cover),
               ),
-              child: Text(
+              child: const Text(
                 "LOGIN",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -35,8 +37,8 @@ class LoginScreen extends StatelessWidget {
 
             Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(horizontal: 40),
-              child: TextField(
+              margin: const EdgeInsets.symmetric(horizontal: 40),
+              child: const TextField(
                 decoration: InputDecoration(
                     labelText: "Username"
                 ),
@@ -47,8 +49,8 @@ class LoginScreen extends StatelessWidget {
 
             Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(horizontal: 40),
-              child: TextField(
+              margin: const EdgeInsets.symmetric(horizontal: 40),
+              child: const TextField(
                 decoration: InputDecoration(
                     labelText: "Password"
                 ),
@@ -58,8 +60,8 @@ class LoginScreen extends StatelessWidget {
 
             Container(
               alignment: Alignment.centerRight,
-              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-              child: Text(
+              margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              child: const Text(
                 "Forgot your password?",
                 style: TextStyle(
                     fontSize: 12,
@@ -72,21 +74,21 @@ class LoginScreen extends StatelessWidget {
 
             Container(
               alignment: Alignment.centerRight,
-              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                    MaterialPageRoute(builder: (context) => const LoginScreen()),
                   );
                 },
                 child: Container(
                   alignment: Alignment.center,
                   height: 50.0,
                   width: size.width * 0.5,
-                  decoration: new BoxDecoration(
+                  decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(80.0),
-                      gradient: new LinearGradient(
+                      gradient: const LinearGradient(
                           colors: [
                             Color.fromARGB(255, 255, 136, 34),
                             Color.fromARGB(255, 255, 177, 41)
@@ -94,7 +96,7 @@ class LoginScreen extends StatelessWidget {
                       )
                   ),
                   padding: const EdgeInsets.all(0),
-                  child: Text(
+                  child: const Text(
                     "LOGIN",
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -107,12 +109,12 @@ class LoginScreen extends StatelessWidget {
 
             Container(
               alignment: Alignment.centerRight,
-              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: GestureDetector(
                 onTap: () => {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()))
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()))
                 },
-                child: Text(
+                child: const Text(
                   "Don't Have an Account? Sign up",
                   style: TextStyle(
                       fontSize: 12,

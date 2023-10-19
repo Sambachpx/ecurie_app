@@ -1,10 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:mongo_dart/mongo_dart.dart' as mongo;
 import 'login.dart';
 import 'background.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:ecurie_app/db/constants.dart';
 
 class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
+
   @override
   _RegisterState createState() => _RegisterState();
 }
@@ -14,8 +20,9 @@ class _RegisterState extends State<RegisterPage> {
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
-  Future _pickImageFromGallery() async {
+  Future<void> _pickImageFromGallery() async {
     final pickedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
@@ -27,7 +34,7 @@ class _RegisterState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
 
     return Scaffold(
       body: Background(
@@ -75,10 +82,12 @@ class _RegisterState extends State<RegisterPage> {
             ),
             SizedBox(height: size.height * 0.03),
             TextButton(
-              child: Text('Select Image'),
               onPressed: _pickImageFromGallery,
+              child: const Text('Select Image'),
             ),
-            _image == null ? Text('No Image selected') : Image.file(_image!),
+            _image == null
+                ? const Text('No Image selected')
+                : Image.file(_image!),
             Container(
               alignment: Alignment.centerRight,
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
@@ -92,7 +101,7 @@ class _RegisterState extends State<RegisterPage> {
                   width: size.width * 0.5,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(80.0),
-                      gradient: new LinearGradient(colors: [
+                      gradient: const LinearGradient(colors: [
                         Color.fromARGB(255, 255, 136, 34),
                         Color.fromARGB(255, 255, 177, 41)
                       ])),
@@ -110,8 +119,10 @@ class _RegisterState extends State<RegisterPage> {
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: GestureDetector(
                 onTap: () => {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()))
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()))
                 },
                 child: const Text(
                   "Already Have an Account? Sign in",
@@ -132,20 +143,35 @@ class _RegisterState extends State<RegisterPage> {
     final username = _usernameController.text;
     final email = _emailController.text;
     final password = _passwordController.text;
+    final cryptPassword = base64.encode(utf8.encode(password));
 
-    var db = await Db.create(
-        'mongodb+srv://Samba:test@cluster0.hs007au.mongodb.net/test?retryWrites=true&w=majority');
+    var db = await mongo.Db.create(MONGO_URL);
     await db.open();
 
-    final collection = db.collection('users');
-    await collection.insertOne({
-      'username': username,
-      'email': email,
-      'password': password,
-    });
+    final collection = db.collection('test');
 
-    print('user inscrit: $username, $email, $password');
+    final existUser = await collection.findOne({'username': username});
+    if (existUser != null) {
+      print('cet utilisateur existe déjà');
+      return;
+    }
 
-    await db.close();
+    if (!emailRegex.hasMatch(email)) {
+      print("adresse e-mail invalide");
+    } else {
+      await collection.insertOne({
+        'username': username,
+        'email': email,
+        'password': cryptPassword,
+      });
+
+      print("user inscrit: $username, $email, $cryptPassword");
+
+      _usernameController.clear();
+      _emailController.clear();
+      _passwordController.clear();
+
+      await db.close();
+    }
   }
 }
