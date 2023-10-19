@@ -176,7 +176,14 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.fromDateTime(_dateAndTime ?? DateTime.now()),
+      builder: (BuildContext context, Widget? child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+          child: child!,
+        );
+      },
     );
+
     if (picked != null) {
       setState(() {
         _dateAndTime = DateTime(
@@ -186,8 +193,9 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
           picked.hour,
           picked.minute,
         );
-        _timeController.text = picked.format(context);
-      });
+        final formattedTime = '${_dateAndTime!.hour.toString().padLeft(2, '0')}:${_dateAndTime!.minute.toString().padLeft(2, '0')}';
+        _timeController.text = formattedTime;      });
     }
   }
+
 }
