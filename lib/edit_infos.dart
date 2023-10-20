@@ -26,6 +26,9 @@ class _EditInfosPageState extends State<EditInfosPage> {
   String? _ffeLink;
   File? _image;
 
+  // Add a global key for the FocusScope
+  final FocusScopeNode _focusScope = FocusScopeNode();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +89,9 @@ class _EditInfosPageState extends State<EditInfosPage> {
                       _email = _emailController.text.isNotEmpty
                           ? _emailController.text
                           : null;
-                      _age = _ageController.text.isNotEmpty ? _ageController.text : null;
+                      _age = _ageController.text.isNotEmpty
+                          ? _ageController.text
+                          : null;
                       _phoneNumber = _phoneNumberController.text.isNotEmpty
                           ? _phoneNumberController.text
                           : null;
@@ -94,9 +99,18 @@ class _EditInfosPageState extends State<EditInfosPage> {
                           ? _ffeLinkController.text
                           : null;
 
+                      // Close the keyboard
+                      _focusScope.unfocus();
+
                       // Now, you can use the variables _username, _email, _age, _phoneNumber, _ffeLink
                       // to save the updated information or perform any necessary actions
-
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.green,
+                          content: Text('Profile infos changed',
+                              style: TextStyle(fontSize: 20)),
+                        ),
+                      );
                       Navigator.pop(context);
                     }
                   },
@@ -109,6 +123,7 @@ class _EditInfosPageState extends State<EditInfosPage> {
       ),
     );
   }
+
   Future _pickImageFromGallery() async {
     final pickedImage =
     await ImagePicker().pickImage(source: ImageSource.gallery);
