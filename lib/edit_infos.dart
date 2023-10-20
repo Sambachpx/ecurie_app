@@ -24,6 +24,7 @@ class _EditInfosPageState extends State<EditInfosPage> {
   String? _age;
   String? _phoneNumber;
   String? _ffeLink;
+  String? _role;
   File? _image;
 
   // Add a global key for the FocusScope
@@ -42,6 +43,7 @@ class _EditInfosPageState extends State<EditInfosPage> {
           child: Form(
             key: _formKey,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TextFormField(
                   controller: _usernameController,
@@ -67,6 +69,21 @@ class _EditInfosPageState extends State<EditInfosPage> {
                 TextFormField(
                   controller: _ffeLinkController,
                   decoration: const InputDecoration(labelText: 'FFE Link'),
+                ),
+                DropdownButtonFormField<String>(
+                  value: _role,
+                  decoration: const InputDecoration(labelText: 'Role'),
+                  items: ['Owner', 'DP'].map((location) {
+                    return DropdownMenuItem(
+                      value: location,
+                      child: Text(location),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _role = value;
+                    });
+                  },
                 ),
                 ElevatedButton(
                   onPressed: () {

@@ -84,6 +84,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           fontFamily: 'Roboto',
                         ),
                       ),
+                      Text(
+                        'Role: ',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Roboto',
+                        ),
+                      ),
                     ],
                   ),
                   Padding(
