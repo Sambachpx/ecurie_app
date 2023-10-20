@@ -147,6 +147,21 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                 textAlign: TextAlign.center),
                           ),
                         ),
+                        SizedBox(
+                          width: 100,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(backgroundColor:Colors.red ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        LoginScreen()),
+                              );
+                            },
+                            child: TextButton(child: Text('Logout'), onPressed: session.clearUser(),),
+                          ),
+                        ),
                       ],
                     ),
                   )

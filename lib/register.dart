@@ -176,8 +176,9 @@ class _RegisterState extends State<RegisterPage> {
     int age = 0;
     String link = "";
     String role = "user";
+    DateTime created_at = DateTime.now();
     Users user = Users(mongo.ObjectId(),username, email, password, image, number, age, link,
-        role, DateTime.now());
+        role, created_at);
     final collection = await mongoDatabase.getCollection('users');
     //final existUser = user.getUserByUsername(mongoDatabase, collection, user.getUserName);
 
@@ -187,7 +188,6 @@ class _RegisterState extends State<RegisterPage> {
       //await collection.updateOne({"username" : "jeff"},{"age" : 5});
       try {
         session.setUser(user);
-        print(session.getUser?.getUserName);
         await collection.insert(user.insertUser(
             mongoDatabase,
             collection,
@@ -199,7 +199,8 @@ class _RegisterState extends State<RegisterPage> {
             user.getUserNumber,
             user.getUserAge,
             user.getUserLink,
-            user.getUserRole) as Map<String, dynamic>);
+            user.getUserRole,
+            user.getUserCreatedAt,) as Map<String, dynamic>);
       } catch (e) {
         print(e);
       }

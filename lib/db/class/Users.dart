@@ -39,7 +39,7 @@ class Users {
   set setUserRole(String role)=>{_role = role};
 
 
-  Future<void> insertUser(MongoDatabase db,DbCollection collection,ObjectId id, String username, String email, String password,String image, String number, int age, String link, String role) async{
+  Future<void> insertUser(MongoDatabase db,DbCollection collection,ObjectId id, String username, String email, String password,String image, String number, int age, String link, String role, DateTime created_at) async{
     await db.connect();
     await collection.insertOne({
       'id' : id,
@@ -51,6 +51,7 @@ class Users {
       'age': age,
       'link': link,
       'role': role,
+      'created_at' : created_at,
     });
     print('user inscrit: $id $username, $email, $password');
     db.db.close();
