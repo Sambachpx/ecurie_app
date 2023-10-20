@@ -1,42 +1,32 @@
 import 'dart:io';
-import 'package:provider/provider.dart';
+
+import 'package:ecurie_app/Notifier/DbManagement.dart';
+import 'package:ecurie_app/db/class/Events.dart';
 import 'package:flutter/material.dart';
-import 'package:ecurie_app/user_profile.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ecurie_app/db/db.dart';
-import 'package:ecurie_app/db/class/events.dart';
-import 'package:ecurie_app/Notifier/DbManagement.dart';
+import 'package:ecurie_app/user_profile.dart';
+import 'package:mongo_dart/mongo_dart.dart';
+import 'package:provider/provider.dart';
+import 'background.dart';
 
 class CreateShowPage extends StatefulWidget {
-  const CreateShowPage({Key? key}) : super(key: key);
-
   @override
-  State<CreateShowPage> createState() => _CreateShowPageState();
+  _CreateShowPageState createState() => _CreateShowPageState();
 }
 
 class _CreateShowPageState extends State<CreateShowPage> {
   final _formKey = GlobalKey<FormState>();
-  File? _image;
   final _nameController = TextEditingController();
   final _addressController = TextEditingController();
   final _dateController = TextEditingController();
-  final _dateTimeController = TextEditingController();
-
-  Future _pickImageFromGallery() async {
-    final pickedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedImage != null) {
-      setState(() {
-        _image = File(pickedImage.path);
-      });
-    }
-  }
+  DateTime? _dateAndTime;
+  File? _image;
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    final appState = Provider.of<AppState>(context);
     return Scaffold(
+      key: UniqueKey(),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Text('Create a Show'),
@@ -74,50 +64,70 @@ class _CreateShowPageState extends State<CreateShowPage> {
                   readOnly: true,
                   controller: _dateController,
                   onTap: () {
-                    _selectDate(context);
+                    showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2021),
+                      lastDate: DateTime(2022),
+                    ).then((date) {
+                      setState(() {
+                        _dateAndTime = date;
+                        _dateController.text =
+                            _dateAndTime!.toIso8601String().substring(0, 10);
+                      });
+                    });
                   },
                   validator: (value) {
-                    if (_dateAndTime == null) {
-                      return 'Please select a date';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(labelText: 'Time'),
-                  readOnly: true,
-                  controller: _timeController,
-                  onTap: () {
-                    _selectTime(context);
-                  },
-                  validator: (value) {
-                    if (_dateAndTime == null) {
-                      return 'Please select a time';
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter the date of the show';
                     }
                     return null;
                   },
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    _pickImageFromGallery();
-                  },
+                  onPressed: () {},
                   child: const Text('Upload Image'),
                 ),
                 _image == null
-                    ? const Text('No image selected.',
+                    ? const Text(
+                        'No image selected.',
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.red))
+                        style: TextStyle(color: Colors.red),
+                      )
                     : Image.file(_image!, width: 100, height: 100),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      await _insertEvent();
                       if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+
+                        const level = null;
+                        const duration = null;
+                        const discipline = null;
+                        const participants = null;
+
+                        final event = Events(
+                            name: _nameController.text,
+                            address: _addressController.text,
+                            date: _dateAndTime,
+                            level: level,
+                            duration: duration,
+                            discipline: discipline,
+                            participants: participants,
+                            image: _image);
+
+                        await event.insertEvent(
+                            MongoDatabase.instance(), DbCollection('events'));
+
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             backgroundColor: Colors.green,
-                            content: Text('Show created',
-                                style: TextStyle(fontSize: 20)),
+                            content: Text(
+                              'Show created',
+                              style: TextStyle(fontSize: 20),
+                            ),
                           ),
                         );
                         Navigator.pop(context);
@@ -128,10 +138,12 @@ class _CreateShowPageState extends State<CreateShowPage> {
                         );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
+                          SnackBar(
                             backgroundColor: Colors.red,
-                            content: Text('Please fill in all fields',
-                                style: TextStyle(fontSize: 20)),
+                            content: Text(
+                              'Please fill in all fields',
+                              style: TextStyle(fontSize: 20),
+                            ),
                           ),
                         );
                       }
@@ -147,11 +159,31 @@ class _CreateShowPageState extends State<CreateShowPage> {
     );
   }
 
-  Future<void>_register(MongoDatabase database) async {
-        final name: _nameController.text;
-        address: _addressController.text;
-        date: _dateAndTime;
-        image: _image);
-    await database.insertEvent(event);
+  Future<void> _insertEvent() async {
+    final name = _nameController.text;
+    final address = _addressController.text;
+    final date = _dateController.text;
+
+    const level = null;
+    const duration = null;
+    const discipline = null;
+    const participants = "";
+
+    if (_formKey.currentState!.validate()) {
+      try {
+        await collection.insert(Event.insertEvent(
+            MongoDatabase,
+            event.getName,
+            event.getAddress,
+            event.getDate,
+            event.getLevel,
+            event.getDuration,
+            event.getDiscipline,
+            event.getParticipants,
+            event.getImage) as Map<String, dynamic>);
+      } catch (e) {
+        print(e);
+      }
+    }
   }
 }

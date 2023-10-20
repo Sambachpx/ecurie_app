@@ -7,7 +7,6 @@ import 'login.dart';
 import 'background.dart';
 import 'dart:convert';
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -160,7 +159,7 @@ class _RegisterState extends State<RegisterPage> {
           ),
         ),
       ),
-      );
+    );
   }
 
   Future<void> _register(MongoDatabase mongoDatabase) async {
