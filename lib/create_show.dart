@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:ecurie_app/user_profile.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ecurie_app/db/db.dart';
-import 'package:ecurie_app/db/class/events.dart';
 
 class CreateShowPage extends StatefulWidget {
   const CreateShowPage({Key? key}) : super(key: key);
@@ -31,7 +29,6 @@ class _CreateShowPageState extends State<CreateShowPage> {
         title: const Text('Create a Show'),
       ),
       body: SingleChildScrollView(
-        // Utilisation de SingleChildScrollView
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(
@@ -99,14 +96,14 @@ class _CreateShowPageState extends State<CreateShowPage> {
                 ),
                 _image == null
                     ? const Text('No image selected.',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.red))
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.red))
                     : Image.file(_image!, width: 100, height: 100),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {
+                      if (_formKey.currentState!.validate() && _image != null) {
                         // Insert the data in the database here
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
@@ -120,6 +117,14 @@ class _CreateShowPageState extends State<CreateShowPage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => const UserProfilePage()),
+                        );
+                      } else if (_image == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Text('Please fill in all fields',
+                                style: TextStyle(fontSize: 20)),
+                          ),
                         );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -188,7 +193,7 @@ class _CreateShowPageState extends State<CreateShowPage> {
 
   Future _pickImageFromGallery() async {
     final pickedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+    await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
       setState(() {
         _image = File(pickedImage.path);

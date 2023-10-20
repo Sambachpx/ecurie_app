@@ -100,7 +100,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         const EditInfosPage()),
-                                // à changer pour la page d'édition de profil
                               );
                             },
                             child: const Text(
