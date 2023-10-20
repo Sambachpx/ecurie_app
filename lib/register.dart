@@ -3,6 +3,7 @@ import 'package:ecurie_app/Notifier/SessionProvider.dart';
 import 'package:ecurie_app/db/class/Users.dart';
 import 'package:ecurie_app/db/db.dart';
 import 'package:flutter/material.dart';
+import 'package:mongo_dart/mongo_dart.dart' as mongo;
 import 'package:provider/provider.dart';
 import 'login.dart';
 import 'background.dart';
@@ -175,7 +176,7 @@ class _RegisterState extends State<RegisterPage> {
     int age = 0;
     String link = "";
     String role = "user";
-    Users user = Users(username, email, password, image, number, age, link,
+    Users user = Users(mongo.ObjectId(),username, email, password, image, number, age, link,
         role, DateTime.now());
     final collection = await mongoDatabase.getCollection('users');
     //final existUser = user.getUserByUsername(mongoDatabase, collection, user.getUserName);
@@ -190,6 +191,7 @@ class _RegisterState extends State<RegisterPage> {
         await collection.insert(user.insertUser(
             mongoDatabase,
             collection,
+            user.getUserId,
             user.getUserName,
             user.getUserEmail,
             cryptPassword,
