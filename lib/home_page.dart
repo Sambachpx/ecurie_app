@@ -76,7 +76,15 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: const Text('Register'),
             ),
-          ],
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UserProfilePage()),
+                );
+              },
+              child: const Text('Register'),
+            ),          ],
         ),
       ),
     );
