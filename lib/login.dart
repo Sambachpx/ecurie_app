@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ecurie_app/Notifier/SessionProvider.dart';
 import 'package:ecurie_app/db/db.dart';
 import 'package:ecurie_app/db/class/Users.dart';
 import 'package:ecurie_app/user_profile.dart';
@@ -60,6 +61,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final appState = Provider.of<AppState>(context);
+    SessionProvider session = Provider.of<SessionProvider>(context);
+
 
     return Scaffold(
       body: Background(
@@ -123,6 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: ElevatedButton(
                 onPressed: () {
+                  session.loginInSession();
                   _login(appState.mongoDatabase);
                 },
                 child: Container(
