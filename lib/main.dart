@@ -1,12 +1,15 @@
 import 'package:ecurie_app/Notifier/DbManagement.dart';
-import 'package:ecurie_app/db/db.dart';
+import 'package:ecurie_app/Notifier/SessionProvider.dart';
 import 'package:ecurie_app/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider(
-    create: (context) => AppState(),
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<SessionProvider>(create: (context) => SessionProvider()),
+      ChangeNotifierProvider<AppState>(create: (context) => AppState()),
+    ],
     child: MyApp(),
   ),);
 }

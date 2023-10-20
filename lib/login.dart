@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ecurie_app/Notifier/SessionProvider.dart';
 import 'package:ecurie_app/db/db.dart';
 import 'package:ecurie_app/db/class/Users.dart';
 import 'package:ecurie_app/user_profile.dart';

@@ -1,4 +1,5 @@
 import 'package:ecurie_app/Notifier/DbManagement.dart';
+import 'package:ecurie_app/Notifier/SessionProvider.dart';
 import 'package:ecurie_app/db/class/Users.dart';
 import 'package:ecurie_app/db/db.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,7 @@ class _RegisterState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final appState = Provider.of<AppState>(context);
+    SessionProvider session = Provider.of<SessionProvider>(context);
 
     return Scaffold(
       body: Background(
@@ -110,7 +112,7 @@ class _RegisterState extends State<RegisterPage> {
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                   child: ElevatedButton(
                     onPressed: () {
-                      _register(appState.mongoDatabase);
+                      _register(appState.mongoDatabase, session);
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -163,7 +165,7 @@ class _RegisterState extends State<RegisterPage> {
       );
   }
 
-  Future<void> _register(MongoDatabase mongoDatabase) async {
+  Future<void> _register(MongoDatabase mongoDatabase, SessionProvider session) async {
     final username = _usernameController.text;
     final email = _emailController.text;
     final password = _passwordController.text;
@@ -183,6 +185,8 @@ class _RegisterState extends State<RegisterPage> {
       // }
       //await collection.updateOne({"username" : "jeff"},{"age" : 5});
       try {
+        session.setUser(user);
+        print(session.getUser?.getUserName);
         await collection.insert(user.insertUser(
             mongoDatabase,
             collection,
