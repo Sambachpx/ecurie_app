@@ -20,6 +20,7 @@ class RegisterChevalPage extends StatefulWidget {
 
 class _RegisterChevalState extends State<RegisterChevalPage> {
   final _formKey = GlobalKey<FormState>();
+  String? _dress;
   File? _image;
   final _nameController = TextEditingController();
   final _ageController = TextEditingController();
@@ -55,7 +56,7 @@ class _RegisterChevalState extends State<RegisterChevalPage> {
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: const Text(
-                    "REGISTER",
+                    "Register Horse",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF2661FA),
@@ -68,7 +69,7 @@ class _RegisterChevalState extends State<RegisterChevalPage> {
                   alignment: Alignment.center,
                   margin: const EdgeInsets.symmetric(horizontal: 40),
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: "Username"),
+                    decoration: const InputDecoration(labelText: "Name of the horse"),
                     controller: _nameController,
                     validator: (value) =>
                     value!.isEmpty ? 'Champ requis' : null,
@@ -79,7 +80,7 @@ class _RegisterChevalState extends State<RegisterChevalPage> {
                   alignment: Alignment.center,
                   margin: const EdgeInsets.symmetric(horizontal: 40),
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: "Username"),
+                    decoration: const InputDecoration(labelText: "Age of the horse"),
                     controller: _ageController,
                     validator: (value) =>
                     value!.isEmpty ? 'Champ requis' : null,
@@ -90,18 +91,39 @@ class _RegisterChevalState extends State<RegisterChevalPage> {
                   alignment: Alignment.center,
                   margin: const EdgeInsets.symmetric(horizontal: 40),
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: "Username"),
+                    decoration: const InputDecoration(labelText: "Horse dress"),
                     controller: _robeController,
                     validator: (value) =>
                     value!.isEmpty ? 'Champ requis' : null,
                   ),
                 ),
                 SizedBox(height: size.height * 0.03),
+                DropdownButtonFormField<String>(
+                  value: _dress,
+                  decoration: const InputDecoration(labelText: 'Location'),
+                  items: ['Mouse', 'White','Gray','Appolesa', 'Pie','Isabelle'].map((location) {
+                    return DropdownMenuItem(
+                      value: location,
+                      child: Text(location),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _dress = value;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please select a location';
+                    }
+                    return null;
+                  },
+                ),
                 Container(
                   alignment: Alignment.center,
                   margin: const EdgeInsets.symmetric(horizontal: 40),
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: "Username"),
+                    decoration: const InputDecoration(labelText: "Horse breed"),
                     controller: _raceController,
                     validator: (value) =>
                     value!.isEmpty ? 'Champ requis' : null,
@@ -112,7 +134,7 @@ class _RegisterChevalState extends State<RegisterChevalPage> {
                   alignment: Alignment.center,
                   margin: const EdgeInsets.symmetric(horizontal: 40),
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: "Username"),
+                    decoration: const InputDecoration(labelText: "Sex of the horse"),
                     controller: _sexeController,
                     validator: (value) =>
                     value!.isEmpty ? 'Champ requis' : null,
@@ -123,7 +145,7 @@ class _RegisterChevalState extends State<RegisterChevalPage> {
                   alignment: Alignment.center,
                   margin: const EdgeInsets.symmetric(horizontal: 40),
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: "Username"),
+                    decoration: const InputDecoration(labelText: "Specialite"),
                     controller: _specialiteController,
                     validator: (value) =>
                     value!.isEmpty ? 'Champ requis' : null,
