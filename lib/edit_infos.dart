@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditInfosPage extends StatefulWidget {
   const EditInfosPage({Key? key}) : super(key: key);
@@ -21,6 +24,7 @@ class _EditInfosPageState extends State<EditInfosPage> {
   String? _age;
   String? _phoneNumber;
   String? _ffeLink;
+  File? _image;
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +67,17 @@ class _EditInfosPageState extends State<EditInfosPage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
+                    _pickImageFromGallery();
+                  },
+                  child: const Text('Upload Image'),
+                ),
+                _image == null
+                    ? const Text('No image selected.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.red))
+                    : Image.file(_image!, width: 100, height: 100),
+                ElevatedButton(
+                  onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       // Assign values to variables if the controllers are not empty
                       _username = _usernameController.text.isNotEmpty
@@ -93,5 +108,14 @@ class _EditInfosPageState extends State<EditInfosPage> {
         ),
       ),
     );
+  }
+  Future _pickImageFromGallery() async {
+    final pickedImage =
+    await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      setState(() {
+        _image = File(pickedImage.path);
+      });
+    }
   }
 }
