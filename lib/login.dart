@@ -34,9 +34,10 @@ class _LoginScreenState extends State<LoginScreen> {
     final user = await collection.findOne({'username': enteredUsername});
 
     if (user != null && user['password'] == enteredPassword) {
-      Navigator.pushReplacement(
+      Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => MainPage()),
+        MaterialPageRoute(builder: (context) => MainPage(title: "MainPage",)),
+            (Route<dynamic> route) => false,
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -45,6 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
     }
+
   }
 
   @override
@@ -160,55 +162,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: Color(0xFF2661FA)),
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.home),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                      const MyHomePage(title: 'Equitator')),
-                );
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.login),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.app_registration),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RegisterPage()),
-                );
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.account_circle),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => UserProfilePage()),
-                );
-              },
             ),
           ],
         ),
