@@ -1,13 +1,15 @@
 import 'package:ecurie_app/Notifier/DbManagement.dart';
+import 'package:ecurie_app/Notifier/SessionProvider.dart';
 import 'package:ecurie_app/db/class/Users.dart';
 import 'package:ecurie_app/db/db.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:mongo_dart/mongo_dart.dart' as mongo;
 import 'package:provider/provider.dart';
 import 'login.dart';
 import 'background.dart';
 import 'dart:convert';
 import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -36,6 +38,7 @@ class _RegisterState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final appState = Provider.of<AppState>(context);
+    SessionProvider session = Provider.of<SessionProvider>(context);
 
     return Scaffold(
       body: Background(
@@ -110,7 +113,7 @@ class _RegisterState extends State<RegisterPage> {
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                   child: ElevatedButton(
                     onPressed: () {
-                      _register(appState.mongoDatabase);
+                      _register(appState.mongoDatabase, session);
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -160,10 +163,10 @@ class _RegisterState extends State<RegisterPage> {
           ),
         ),
       ),
-    );
+      );
   }
 
-  Future<void> _register(MongoDatabase mongoDatabase) async {
+  Future<void> _register(MongoDatabase mongoDatabase, SessionProvider session) async {
     final username = _usernameController.text;
     final email = _emailController.text;
     final password = _passwordController.text;
@@ -173,8 +176,9 @@ class _RegisterState extends State<RegisterPage> {
     int age = 0;
     String link = "";
     String role = "user";
-    Users user = Users(username, email, password, image, number, age, link,
-        role, DateTime.now());
+    DateTime created_at = DateTime.now();
+    Users user = Users(mongo.ObjectId(),username, email, password, image, number, age, link,
+        role, created_at);
     final collection = await mongoDatabase.getCollection('users');
     //final existUser = user.getUserByUsername(mongoDatabase, collection, user.getUserName);
 
@@ -183,9 +187,11 @@ class _RegisterState extends State<RegisterPage> {
       // }
       //await collection.updateOne({"username" : "jeff"},{"age" : 5});
       try {
+        session.setUser(user);
         await collection.insert(user.insertUser(
             mongoDatabase,
             collection,
+            user.getUserId,
             user.getUserName,
             user.getUserEmail,
             cryptPassword,
@@ -193,7 +199,8 @@ class _RegisterState extends State<RegisterPage> {
             user.getUserNumber,
             user.getUserAge,
             user.getUserLink,
-            user.getUserRole) as Map<String, dynamic>);
+            user.getUserRole,
+            user.getUserCreatedAt,) as Map<String, dynamic>);
       } catch (e) {
         print(e);
       }

@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'package:ecurie_app/Notifier/SessionProvider.dart';
 import 'package:ecurie_app/db/db.dart';
 import 'package:ecurie_app/db/class/Users.dart';
+import 'package:ecurie_app/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecurie_app/Notifier/DbManagement.dart';
 import 'db/constants.dart';
+import 'home_page.dart';
 import 'register.dart';
 import 'background.dart';
 import 'main_page.dart';
@@ -31,13 +34,11 @@ class _LoginScreenState extends State<LoginScreen> {
     final collection = await mongoDatabase.getCollection(USER_COLLECTION);
     final user = await collection.findOne({'username': enteredUsername});
 
-    print(collection);
-    print("hazoiudhjkezabhiezbdf");
-
     if (user != null && user['password'] == enteredPassword) {
-      Navigator.pushReplacement(
+      Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => MainPage()),
+        MaterialPageRoute(builder: (context) => MainPage(title: "MainPage",)),
+            (Route<dynamic> route) => false,
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -46,6 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
     }
+
   }
 
   @override
@@ -59,6 +61,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final appState = Provider.of<AppState>(context);
+    SessionProvider session = Provider.of<SessionProvider>(context);
+
 
     return Scaffold(
       body: Background(
@@ -122,6 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: ElevatedButton(
                 onPressed: () {
+                  session.loginInSession();
                   _login(appState.mongoDatabase);
                 },
                 child: Container(
@@ -150,8 +155,8 @@ class _LoginScreenState extends State<LoginScreen> {
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: GestureDetector(
                 onTap: () => {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => RegisterPage()))
+                  Navigator.pop(context),
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()))
                 },
                 child: const Text(
                   "Don't Have an Account? Sign up",

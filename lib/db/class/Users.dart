@@ -3,7 +3,7 @@ import 'package:ecurie_app/db/db.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
 class Users {
-  //late ObjectId id;
+  late ObjectId _id;
   late String _username;
   late String _email;
   late String _password;
@@ -14,10 +14,10 @@ class Users {
   late String _role;
   late DateTime _created_at;
 
-  Users(this._username, this._email, this._password, this._image, this._number, this._age, this._link, this._role, this._created_at);
+  Users(this. _id, this._username, this._email, this._password, this._image, this._number, this._age, this._link, this._role, this._created_at);
 
   //getters
-  //ObjectId get userId => id;
+  ObjectId get getUserId => _id;
   String get getUserName => _username;
   String get getUserEmail => _email;
   String get getUserPassword => _password;
@@ -39,9 +39,10 @@ class Users {
   set setUserRole(String role)=>{_role = role};
 
 
-  Future<void> insertUser(MongoDatabase db,DbCollection collection, String username, String email, String password,String image, String number, int age, String link, String role) async{
+  Future<void> insertUser(MongoDatabase db,DbCollection collection,ObjectId id, String username, String email, String password,String image, String number, int age, String link, String role, DateTime created_at) async{
     await db.connect();
     await collection.insertOne({
+      'id' : id,
       'username': username,
       'email': email,
       'password': password,
@@ -50,8 +51,9 @@ class Users {
       'age': age,
       'link': link,
       'role': role,
+      'created_at' : created_at,
     });
-    print('user inscrit: $username, $email, $password');
+    print('user inscrit: $id $username, $email, $password');
     db.db.close();
   }
 
