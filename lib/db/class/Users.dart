@@ -42,7 +42,7 @@ class Users {
   Future<void> insertUser(MongoDatabase db,DbCollection collection,ObjectId id, String username, String email, String password,String image, String number, int age, String link, String role, DateTime created_at) async{
     await db.connect();
     await collection.insertOne({
-      'id' : id,
+      'uuid' : id,
       'username': username,
       'email': email,
       'password': password,
