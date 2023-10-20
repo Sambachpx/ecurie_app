@@ -1,8 +1,15 @@
+import 'package:ecurie_app/Notifier/SessionProvider.dart';
+import 'package:ecurie_app/register_cheval.dart';
 import 'package:flutter/material.dart';
 import 'package:ecurie_app/home_page.dart';
 import 'package:ecurie_app/login.dart';
 import 'package:ecurie_app/register.dart';
+import 'package:ecurie_app/create_lesson.dart';
+import 'package:ecurie_app/create_show.dart';
 import 'package:ecurie_app/db/db.dart';
+import 'package:provider/provider.dart';
+import 'news.dart';
+import 'main_page.dart';
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({Key? key}) : super(key: key);
@@ -12,8 +19,15 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
+  
   @override
   Widget build(BuildContext context) {
+    SessionProvider session = Provider.of<SessionProvider>(context);
+    String? currentUsername = session.getUser?.getUserName;
+    String? currentEmail = session.getUser?.getUserEmail;
+    String? currentPhone = session.getUser?.getUserNumber;
+    int? currentuserAge = session.getUser?.getUserAge;
+    String? currentLink = session.getUser?.getUserLink;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -35,63 +49,140 @@ class _UserProfilePageState extends State<UserProfilePage> {
             Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Ink.image(
-                      image: const AssetImage('assets/images/user.png'),
+                      image: const AssetImage('assets/images/logo_cheval.jpeg'),
                       width: 150,
                       height: 150,
                       fit: BoxFit.cover),
-                  const Text(
-                    'Username: ',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Roboto',
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Username: $currentUsername',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Roboto',
+                        ),
+                      ),
+                      Text('Email: $currentEmail',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Roboto',
+                          )),
+                      Text('Phone: $currentPhone',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Roboto',
+                          )),
+                      Text(
+                        'Age: $currentPhone',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Roboto',
+                        ),
+                      ),
+                      Text(
+                        'FFE link: $currentLink',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Roboto',
+                        ),
+                      ),
+                    ],
                   ),
-                  const Text('Email: ',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Roboto',
-                      )),
-                  const Text('Phone: ',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Roboto',
-                      )),
-                  const Text(
-                    'Age: ',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Roboto',
-                    ),
-                  ),
-                  const Text(
-                    'FFE link: ',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Roboto',
-                    ),),
                   Padding(
                     padding: const EdgeInsets.all(10),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const UserProfilePage()),
-                        );
-                      },
-                      child: const Text('Edit Profile',
-                          style: TextStyle(fontSize: 20)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
+                          width: 100,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const UserProfilePage()),
+                                // à changer pour la page d'édition de profil
+                              );
+                            },
+                            child: const Text(
+                              'Edit Profile',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 100,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const CreateLessonPage()),
+                              );
+                            },
+                            child: const Text('Create Lesson',
+                                textAlign: TextAlign.center),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 100,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const CreateShowPage()),
+                              );
+                            },
+                            child: const Text('Create Show',
+                                textAlign: TextAlign.center),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 100,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(backgroundColor:Colors.red ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        LoginScreen()),
+                              );
+                            },
+                            child: TextButton(child: Text('Logout'), onPressed: session.clearUser(),),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 100,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(backgroundColor:Colors.red ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        RegisterChevalPage()),
+                              );
+                            },
+                            child: TextButton(child: Text('CHEVAL'), onPressed: session.clearUser(),),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
@@ -109,8 +200,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                      const MyHomePage(title: 'Equitator')),
+                      builder: (context) => MainPage(title: "MainPage",)),
                 );
               },
             ),
@@ -130,18 +220,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 Navigator.pop(context);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => RegisterPage()),
+                  MaterialPageRoute(builder: (context) => NewsPage(title: "test")),
                 );
               },
             ),
             IconButton(
               icon: const Icon(Icons.account_circle),
               onPressed: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => UserProfilePage()),
-                );
               },
             ),
           ],
