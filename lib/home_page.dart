@@ -1,6 +1,13 @@
+import 'dart:convert';
+import 'package:ecurie_app/db/db.dart';
+import 'package:ecurie_app/db/class/Users.dart';
+import 'package:ecurie_app/user_profile.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'db/constants.dart';
+import 'package:ecurie_app/Notifier/DbManagement.dart';
 import 'package:flutter/material.dart';
 import 'login.dart';
-import 'user_profile.dart';
 import 'register.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -51,47 +58,23 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.home),
+            ElevatedButton(
               onPressed: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const MyHomePage(title: 'Equitator')),
-                );
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.login),
-              onPressed: () {
-                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LoginScreen()),
                 );
               },
+              child: const Text('Login'),
             ),
-            IconButton(
-              icon: const Icon(Icons.app_registration),
+            ElevatedButton(
               onPressed: () {
-                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => RegisterPage()),
                 );
               },
-            ),
-            IconButton(
-              icon: const Icon(Icons.account_circle),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => UserProfilePage()),
-                );
-              },
+              child: const Text('Register'),
             ),
           ],
         ),
