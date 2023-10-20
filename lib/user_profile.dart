@@ -1,5 +1,7 @@
+import 'package:ecurie_app/Notifier/DbManagement.dart';
 import 'package:ecurie_app/Notifier/SessionProvider.dart';
 import 'package:ecurie_app/register_cheval.dart';
+import 'package:ecurie_app/register_soir.dart';
 import 'package:flutter/material.dart';
 import 'package:ecurie_app/home_page.dart';
 import 'package:ecurie_app/login.dart';
@@ -19,9 +21,9 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
-  
   @override
   Widget build(BuildContext context) {
+    final appState = Provider.of<AppState>(context);
     SessionProvider session = Provider.of<SessionProvider>(context);
     String? currentUsername = session.getUser?.getUserName;
     String? currentEmail = session.getUser?.getUserEmail;
@@ -95,91 +97,121 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           fontFamily: 'Roboto',
                         ),
                       ),
+                      Text(
+                        'Role: ',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Roboto',
+                        ),
+                      ),
                     ],
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10),
-                    child: Row(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        SizedBox(
-                          width: 100,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const UserProfilePage()),
-                                // à changer pour la page d'édition de profil
-                              );
-                            },
-                            child: const Text(
-                              'Edit Profile',
-                              textAlign: TextAlign.center,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            SizedBox(
+                              width: 101,
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                child: const Text(
+                                  'Edit Profile',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
                             ),
-                          ),
+                            SizedBox(
+                              width: 101,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const CreateLessonPage()),
+                                  );
+                                },
+                                child: const Text('Create Lesson',
+                                    textAlign: TextAlign.center),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 100,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const CreateShowPage()),
+                                  );
+                                },
+                                child: const Text('Register Concours',
+                                    textAlign: TextAlign.center),
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          width: 100,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const CreateLessonPage()),
-                              );
-                            },
-                            child: const Text('Create Lesson',
-                                textAlign: TextAlign.center),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 100,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const CreateShowPage()),
-                              );
-                            },
-                            child: const Text('Create Show',
-                                textAlign: TextAlign.center),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 100,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(backgroundColor:Colors.red ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        LoginScreen()),
-                              );
-                            },
-                            child: TextButton(child: Text('Logout'), onPressed: session.clearUser(),),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 100,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(backgroundColor:Colors.red ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        RegisterChevalPage()),
-                              );
-                            },
-                            child: TextButton(child: Text('CHEVAL'), onPressed: session.clearUser(),),
-                          ),
-                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 101,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.red),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()),
+                                  );
+                                },
+                                child: TextButton(
+                                  child: Text('Logout',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(color: Colors.white)),
+                                  onPressed: session.clearUser(),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 101,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            RegisterChevalPage()),
+                                  );
+                                },
+                                child: const Text('Register Horse',
+                                    textAlign: TextAlign.center),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 101,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const CreatePartyPage()),
+                                  );
+                                },
+                                child: const Text('Register Party',
+                                    textAlign: TextAlign.center),
+                              ),
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   )
@@ -200,7 +232,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => MainPage(title: "MainPage",)),
+                      builder: (context) => MainPage(
+                            title: "MainPage",
+                          )),
                 );
               },
             ),
@@ -220,14 +254,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 Navigator.pop(context);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => NewsPage(title: "test")),
+                  MaterialPageRoute(
+                      builder: (context) => NewsPage(title: "test")),
                 );
               },
             ),
             IconButton(
               icon: const Icon(Icons.account_circle),
-              onPressed: () {
-              },
+              onPressed: () {},
             ),
           ],
         ),

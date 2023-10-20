@@ -163,10 +163,11 @@ class _RegisterState extends State<RegisterPage> {
           ),
         ),
       ),
-      );
+    );
   }
 
-  Future<void> _register(MongoDatabase mongoDatabase, SessionProvider session) async {
+  Future<void> _register(
+      MongoDatabase mongoDatabase, SessionProvider session) async {
     final username = _usernameController.text;
     final email = _emailController.text;
     final password = _passwordController.text;
@@ -177,8 +178,8 @@ class _RegisterState extends State<RegisterPage> {
     String link = "";
     String role = "user";
     DateTime created_at = DateTime.now();
-    Users user = Users(mongo.ObjectId(),username, email, password, image, number, age, link,
-        role, created_at);
+    Users user = Users(mongo.ObjectId(), username, email, password, image,
+        number, age, link, role, created_at);
     final collection = await mongoDatabase.getCollection('users');
     //final existUser = user.getUserByUsername(mongoDatabase, collection, user.getUserName);
 
@@ -189,18 +190,19 @@ class _RegisterState extends State<RegisterPage> {
       try {
         session.setUser(user);
         await collection.insert(user.insertUser(
-            mongoDatabase,
-            collection,
-            user.getUserId,
-            user.getUserName,
-            user.getUserEmail,
-            cryptPassword,
-            user.getUserImage,
-            user.getUserNumber,
-            user.getUserAge,
-            user.getUserLink,
-            user.getUserRole,
-            user.getUserCreatedAt,) as Map<String, dynamic>);
+          mongoDatabase,
+          collection,
+          user.getUserId,
+          user.getUserName,
+          user.getUserEmail,
+          cryptPassword,
+          user.getUserImage,
+          user.getUserNumber,
+          user.getUserAge,
+          user.getUserLink,
+          user.getUserRole,
+          user.getUserCreatedAt,
+        ) as Map<String, dynamic>);
       } catch (e) {
         print(e);
       }

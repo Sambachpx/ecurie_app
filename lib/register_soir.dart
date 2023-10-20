@@ -1,6 +1,5 @@
 import 'package:ecurie_app/Notifier/DbManagement.dart';
 import 'package:ecurie_app/Notifier/SessionProvider.dart';
-import 'package:ecurie_app/db/class/Horses.dart';
 import 'package:ecurie_app/db/constants.dart';
 import 'package:ecurie_app/db/db.dart';
 import 'package:ecurie_app/user_profile.dart';
@@ -13,14 +12,14 @@ import 'package:ecurie_app/db/db.dart';
 import 'package:flutter/material.dart';
 import 'package:ecurie_app/user_profile.dart';
 
-class CreateLessonPage extends StatefulWidget {
-  const CreateLessonPage({Key? key}) : super(key: key);
+class CreatePartyPage extends StatefulWidget {
+  const CreatePartyPage({Key? key}) : super(key: key);
 
   @override
-  State<CreateLessonPage> createState() => _CreateLessonPageState();
+  State<CreatePartyPage> createState() => _CreatePartyPageState();
 }
 
-class _CreateLessonPageState extends State<CreateLessonPage> {
+class _CreatePartyPageState extends State<CreatePartyPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? _location;
   DateTime? _dateAndTime;
@@ -39,7 +38,7 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title: const Text('Create a Lesson'),
+        title: const Text('Create a Party'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -48,27 +47,6 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              DropdownButtonFormField<String>(
-                value: _location,
-                decoration: const InputDecoration(labelText: 'Location'),
-                items: ['Carrière', 'Manège'].map((location) {
-                  return DropdownMenuItem(
-                    value: location,
-                    child: Text(location),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _location = value;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please select a location';
-                  }
-                  return null;
-                },
-              ),
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Name'),
                 controller: _nameController,
@@ -77,6 +55,19 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
                     return 'Please enter the name of the show';
                   }
                   return null;
+                },
+              ),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Address'),
+                controller: _locationController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter the address of the show';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _location = value;
                 },
               ),
               TextFormField(
@@ -107,55 +98,12 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
                   return null;
                 },
               ),
-              DropdownButtonFormField<String>(
-                value: _duration,
-                decoration: const InputDecoration(labelText: 'Duration'),
-                items: ['30min', '1h'].map((duration) {
-                  return DropdownMenuItem(
-                    value: duration,
-                    child: Text(duration),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _duration = value;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please select a duration';
-                  }
-                  return null;
-                },
-              ),
-              DropdownButtonFormField<String>(
-                value: _discipline,
-                decoration: const InputDecoration(labelText: 'Discipline'),
-                items: ['Dressage', 'Saut d\'obstacle', 'Endurance']
-                    .map((discipline) {
-                  return DropdownMenuItem(
-                    value: discipline,
-                    child: Text(discipline),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _discipline = value;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please select a discipline';
-                  }
-                  return null;
-                },
-              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      _insertEvent(appState.mongoDatabase);
+                      _insertSoiree(appState.mongoDatabase);
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           backgroundColor: Colors.green,
@@ -233,14 +181,14 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
     }
   }
 
-  Future<void> _insertEvent(MongoDatabase mongoDatabase) async {
+  Future<void> _insertSoiree(MongoDatabase mongoDatabase) async {
     final name = _nameController.text;
     final date = _dateController.text;
     final time = _dateAndTime;
     final location = _location;
     const level = "";
     const duration = "";
-    const type = 'Cours';
+    const type = 'Soiree';
     final discipline = _discipline;
     final participants = [];
 
@@ -264,6 +212,16 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
             event.getEventCreatedAt) as Map<String, dynamic>);
       } catch (e) {
         print(e);
+      }
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.red,
+            content: Text('Please fill in all fields',
+                style: TextStyle(fontSize: 20)),
+          ),
+        );
       }
     }
   }

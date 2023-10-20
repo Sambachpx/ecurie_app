@@ -10,6 +10,7 @@ import 'db/constants.dart';
 import 'home_page.dart';
 import 'register.dart';
 import 'background.dart';
+import 'db/db.dart';
 import 'main_page.dart';
 import 'forgotmdp.dart';
 
@@ -37,8 +38,11 @@ class _LoginScreenState extends State<LoginScreen> {
     if (user != null && user['password'] == enteredPassword) {
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => MainPage(title: "MainPage",)),
-            (Route<dynamic> route) => false,
+        MaterialPageRoute(
+            builder: (context) => MainPage(
+                  title: "MainPage",
+                )),
+        (Route<dynamic> route) => false,
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -47,7 +51,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
     }
-
   }
 
   @override
@@ -62,7 +65,6 @@ class _LoginScreenState extends State<LoginScreen> {
     Size size = MediaQuery.of(context).size;
     final appState = Provider.of<AppState>(context);
     SessionProvider session = Provider.of<SessionProvider>(context);
-
 
     return Scaffold(
       body: Background(
@@ -156,7 +158,8 @@ class _LoginScreenState extends State<LoginScreen> {
               child: GestureDetector(
                 onTap: () => {
                   Navigator.pop(context),
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()))
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RegisterPage()))
                 },
                 child: const Text(
                   "Don't Have an Account? Sign up",

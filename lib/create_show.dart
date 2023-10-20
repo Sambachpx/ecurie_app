@@ -211,7 +211,7 @@ class _CreateShowPageState extends State<CreateShowPage> {
     final location = _locationController.text;
     const level = "";
     const duration = "";
-    const type = "";
+    const type = 'Concours';
     const discipline = "";
     final participants = [];
 

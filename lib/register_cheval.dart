@@ -31,7 +31,7 @@ class _RegisterChevalState extends State<RegisterChevalPage> {
 
   Future _pickImageFromGallery() async {
     final pickedImage =
-    await ImagePicker().pickImage(source: ImageSource.gallery);
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
       setState(() {
         _image = File(pickedImage.path);
@@ -69,10 +69,11 @@ class _RegisterChevalState extends State<RegisterChevalPage> {
                   alignment: Alignment.center,
                   margin: const EdgeInsets.symmetric(horizontal: 40),
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: "Name of the horse"),
+                    decoration:
+                        const InputDecoration(labelText: "Name of the horse"),
                     controller: _nameController,
                     validator: (value) =>
-                    value!.isEmpty ? 'Champ requis' : null,
+                        value!.isEmpty ? 'Champ requis' : null,
                   ),
                 ),
                 SizedBox(height: size.height * 0.03),
@@ -80,10 +81,11 @@ class _RegisterChevalState extends State<RegisterChevalPage> {
                   alignment: Alignment.center,
                   margin: const EdgeInsets.symmetric(horizontal: 40),
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: "Age of the horse"),
+                    decoration:
+                        const InputDecoration(labelText: "Age of the horse"),
                     controller: _ageController,
                     validator: (value) =>
-                    value!.isEmpty ? 'Champ requis' : null,
+                        value!.isEmpty ? 'Champ requis' : null,
                   ),
                 ),
                 SizedBox(height: size.height * 0.03),
@@ -94,31 +96,10 @@ class _RegisterChevalState extends State<RegisterChevalPage> {
                     decoration: const InputDecoration(labelText: "Horse dress"),
                     controller: _robeController,
                     validator: (value) =>
-                    value!.isEmpty ? 'Champ requis' : null,
+                        value!.isEmpty ? 'Champ requis' : null,
                   ),
                 ),
                 SizedBox(height: size.height * 0.03),
-                DropdownButtonFormField<String>(
-                  value: _dress,
-                  decoration: const InputDecoration(labelText: 'Location'),
-                  items: ['Mouse', 'White','Gray','Appolesa', 'Pie','Isabelle'].map((location) {
-                    return DropdownMenuItem(
-                      value: location,
-                      child: Text(location),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      _dress = value;
-                    });
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please select a location';
-                    }
-                    return null;
-                  },
-                ),
                 Container(
                   alignment: Alignment.center,
                   margin: const EdgeInsets.symmetric(horizontal: 40),
@@ -126,7 +107,7 @@ class _RegisterChevalState extends State<RegisterChevalPage> {
                     decoration: const InputDecoration(labelText: "Horse breed"),
                     controller: _raceController,
                     validator: (value) =>
-                    value!.isEmpty ? 'Champ requis' : null,
+                        value!.isEmpty ? 'Champ requis' : null,
                   ),
                 ),
                 SizedBox(height: size.height * 0.03),
@@ -134,10 +115,11 @@ class _RegisterChevalState extends State<RegisterChevalPage> {
                   alignment: Alignment.center,
                   margin: const EdgeInsets.symmetric(horizontal: 40),
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: "Sex of the horse"),
+                    decoration:
+                        const InputDecoration(labelText: "Sex of the horse"),
                     controller: _sexeController,
                     validator: (value) =>
-                    value!.isEmpty ? 'Champ requis' : null,
+                        value!.isEmpty ? 'Champ requis' : null,
                   ),
                 ),
                 SizedBox(height: size.height * 0.03),
@@ -148,7 +130,7 @@ class _RegisterChevalState extends State<RegisterChevalPage> {
                     decoration: const InputDecoration(labelText: "Specialite"),
                     controller: _specialiteController,
                     validator: (value) =>
-                    value!.isEmpty ? 'Champ requis' : null,
+                        value!.isEmpty ? 'Champ requis' : null,
                   ),
                 ),
                 SizedBox(height: size.height * 0.03),
@@ -160,14 +142,16 @@ class _RegisterChevalState extends State<RegisterChevalPage> {
                     ? const Text('No Image selected')
                     : Image.file(_image!),
                 Container(
-                  child:FloatingActionButton(
+                  child: FloatingActionButton(
                     onPressed: () {
                       _addHorse(appState.mongoDatabase, session);
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => UserProfilePage()),
+                        MaterialPageRoute(
+                            builder: (context) => UserProfilePage()),
                       );
-                    }, child: null,
+                    },
+                    child: null,
                   ),
                 ),
               ],
@@ -178,7 +162,8 @@ class _RegisterChevalState extends State<RegisterChevalPage> {
     );
   }
 
-  Future<void> _addHorse(MongoDatabase mongoDatabase, SessionProvider session) async {
+  Future<void> _addHorse(
+      MongoDatabase mongoDatabase, SessionProvider session) async {
     final name = _nameController.text;
     final age = int.parse(_ageController.text);
     final robe = _robeController.text;
@@ -191,7 +176,8 @@ class _RegisterChevalState extends State<RegisterChevalPage> {
     List idhorseman = [];
     String link = "";
     DateTime created_at = DateTime.now();
-    Horses horses = Horses(mongo.ObjectId(),idowner,name, age, robe,race,sexe,specialite, idhorseman, created_at);
+    Horses horses = Horses(mongo.ObjectId(), idowner, name, age, robe, race,
+        sexe, specialite, idhorseman, created_at);
     final collection = await mongoDatabase.getCollection(HORSE_COLLECTION);
     //final existUser = user.getUserByUsername(mongoDatabase, collection, user.getUserName);
 
@@ -212,7 +198,8 @@ class _RegisterChevalState extends State<RegisterChevalPage> {
           horses.sexe,
           horses.specialite,
           horses.idhorseman,
-          horses.getHorseCreatedAt,) as Map<String, dynamic>);
+          horses.getHorseCreatedAt,
+        ) as Map<String, dynamic>);
       } catch (e) {
         print(e);
       }
