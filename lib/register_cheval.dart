@@ -182,6 +182,7 @@ class _RegisterChevalState extends State<RegisterChevalPage> {
           mongoDatabase,
           collection,
           horses.getHorseId,
+          horses.getIdowner,
           horses.getHorseName,
           horses.getHorseAge,
           horses.getHorseRobe,

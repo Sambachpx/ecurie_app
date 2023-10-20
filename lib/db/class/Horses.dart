@@ -39,12 +39,13 @@ class Horses {
 
   Future<void> insertHorse(
     MongoDatabase db,
-    DbCollection collection, ObjectId id, String name, int age , String robe,
+    DbCollection collection, ObjectId id, int idowner, String name, int age , String robe,
       String race, String sexe, String specialite, List idhorseman, DateTime create_at,
   ) async {
     await db.connect();
     await collection.insertOne({
-      'idowner': id,
+      'uuid' : id,
+      'idowner': idowner,
       'name': name,
       'age': age,
       'role': robe,
