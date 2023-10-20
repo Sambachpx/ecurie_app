@@ -1,4 +1,5 @@
 import 'package:ecurie_app/Notifier/SessionProvider.dart';
+import 'package:ecurie_app/register_cheval.dart';
 import 'package:flutter/material.dart';
 import 'package:ecurie_app/home_page.dart';
 import 'package:ecurie_app/login.dart';
@@ -162,6 +163,21 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               );
                             },
                             child: TextButton(child: Text('Logout'), onPressed: session.clearUser(),),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 100,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(backgroundColor:Colors.red ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        RegisterChevalPage()),
+                              );
+                            },
+                            child: TextButton(child: Text('CHEVAL'), onPressed: session.clearUser(),),
                           ),
                         ),
                       ],
