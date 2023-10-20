@@ -1,3 +1,4 @@
+import 'package:ecurie_app/soir%C3%A9e_choix.dart';
 import 'package:flutter/material.dart';
 import 'login.dart';
 import 'register.dart';
@@ -67,6 +68,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
               child: const Text('Register'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CreateEventPage()),
+                );
+              },
+              child: const Text('Créer une soirée'),
             ),
           ],
         ),
