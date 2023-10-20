@@ -2,6 +2,7 @@ import 'package:ecurie_app/Notifier/DbManagement.dart';
 import 'package:ecurie_app/db/class/Users.dart';
 import 'package:ecurie_app/db/db.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'login.dart';
 import 'background.dart';
