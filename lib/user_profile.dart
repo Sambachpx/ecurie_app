@@ -5,6 +5,8 @@ import 'package:ecurie_app/register.dart';
 import 'package:ecurie_app/create_lesson.dart';
 import 'package:ecurie_app/create_show.dart';
 import 'package:ecurie_app/db/db.dart';
+import 'news.dart';
+import 'main_page.dart';
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({Key? key}) : super(key: key);
@@ -158,8 +160,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          const MyHomePage(title: 'Equitator')),
+                      builder: (context) => MainPage(title: "MainPage",)),
                 );
               },
             ),
@@ -179,19 +180,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 Navigator.pop(context);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => RegisterPage()),
+                  MaterialPageRoute(builder: (context) => NewsPage(title: "test")),
                 );
               },
             ),
             IconButton(
               icon: const Icon(Icons.account_circle),
               onPressed: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const UserProfilePage()),
-                );
               },
             ),
           ],
