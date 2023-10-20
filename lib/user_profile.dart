@@ -4,6 +4,7 @@ import 'package:ecurie_app/login.dart';
 import 'package:ecurie_app/register.dart';
 import 'package:ecurie_app/create_lesson.dart';
 import 'package:ecurie_app/create_show.dart';
+import 'package:ecurie_app/edit_infos.dart';
 import 'package:ecurie_app/db/db.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -98,7 +99,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const UserProfilePage()),
+                                        const EditInfosPage()),
                                 // à changer pour la page d'édition de profil
                               );
                             },
