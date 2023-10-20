@@ -19,7 +19,7 @@ class Myform extends StatelessWidget {
     return Form(
       child: Center(
         child: Container(
-          width: 500,
+          width: 400,
       child: TextFormField(
         maxLength: 12,
        // maxLines: 1,
@@ -58,7 +58,7 @@ class MyFormtwo extends StatelessWidget{
     return Form(
       child: Center(
         child: Container(
-          width: 500,
+          width: 400,
       child: TextFormField(
         maxLength: 3,
         decoration: const InputDecoration(
@@ -87,7 +87,7 @@ class lien_Ffe extends StatelessWidget{
     return Form(
       child: Center(
         child: Container(
-            width: 500,
+            width: 400,
             child: TextFormField(
               initialValue:"Https://",
                 decoration: const InputDecoration(

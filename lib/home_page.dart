@@ -1,7 +1,6 @@
 import 'package:ecurie_app/edit_infos.dart';
 import 'infos_personnelles.dart';
 import 'package:flutter/material.dart';
-import 'edit_infos.dart';
 
 
 class MyHomePage extends StatefulWidget {
@@ -25,10 +24,10 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            EditProfile(title: "Edit Profile cheval"),
             Myform(),
             MyFormtwo(),
             lien_Ffe(),
-            //EditProfile(title: "Edit Profile cheval"),
 
 
           ],
